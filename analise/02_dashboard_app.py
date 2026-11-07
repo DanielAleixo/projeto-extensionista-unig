@@ -1,7 +1,6 @@
+import os
 import streamlit as st
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Dashboard - Tema Integrador VII (UNIG)", layout="wide")
 
@@ -10,7 +9,15 @@ st.markdown("**Curso:** Bacharelado em Ciência da Computação (UNIG) | **Disci
 
 @st.cache_data
 def load_data():
-    return pd.read_csv("../dados/dados_tratados.csv")
+    caminhos_possiveis = [
+        "dados/dados_tratados.csv",
+        "../dados/dados_tratados.csv",
+        os.path.join(os.path.dirname(__file__), "../dados/dados_tratados.csv")
+    ]
+    for caminho in caminhos_possiveis:
+        if os.path.exists(caminho):
+            return pd.read_csv(caminho, encoding="utf-8-sig")
+    raise FileNotFoundError("Arquivo dados_tratados.csv não encontrado.")
 
 try:
     df = load_data()
@@ -18,6 +25,7 @@ try:
     # Filtro Lateral por Faixa Etária (Q2)
     st.sidebar.header("🔍 Filtros da Pesquisa")
     if "faixa_etaria" in df.columns:
+        df["faixa_etaria"] = df["faixa_etaria"].astype(str).str.strip()
         opcoes_idade = df["faixa_etaria"].dropna().unique().tolist()
         selecao_idade = st.sidebar.multiselect("Faixa Etária:", options=opcoes_idade, default=opcoes_idade)
         df = df[df["faixa_etaria"].isin(selecao_idade)]

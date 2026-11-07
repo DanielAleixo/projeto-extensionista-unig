@@ -47,7 +47,7 @@ def mapear_colunas_inteligente(df):
 
 def carregar_e_limpar_dados(caminho_csv):
     print("1. Carregando base bruta do Google Forms...")
-    df = pd.read_csv(caminho_csv)
+    df = pd.read_csv(caminho_csv, encoding="utf-8-sig")
     df = mapear_colunas_inteligente(df)
 
     # Filtrar apenas participantes que concordaram com o TCLE
@@ -70,7 +70,7 @@ def carregar_e_limpar_dados(caminho_csv):
     df_tratado = df.drop(columns=colunas_remover)
 
     caminho_saida = os.path.join(DIR_DADOS, "dados_tratados.csv")
-    df_tratado.to_csv(caminho_saida, index=False, encoding="utf-8")
+    df_tratado.to_csv(caminho_saida, index=False, encoding="utf-8-sig")
     print(f"2. Base tratada e anonimizada salva em: {caminho_saida}")
     return df_tratado
 
@@ -86,7 +86,7 @@ def gerar_estatistica_descritiva(df):
     resumo.columns = ["N", "Média", "Desvio Padrão", "Mediana", "Mín", "Máx"]
     print("\n--- Tabela de Médias e Desvios (Escalas Likert 1 a 5) ---")
     print(resumo.round(2))
-    resumo.round(2).to_csv(os.path.join(DIR_DADOS, "resumo_estatistico_likert.csv"))
+    resumo.round(2).to_csv(os.path.join(DIR_DADOS, "resumo_estatistico_likert.csv"), encoding="utf-8-sig")
 
 def gerar_visualizacoes(df):
     print("\n4. Gerando gráficos de alta resolução em /figuras...")
