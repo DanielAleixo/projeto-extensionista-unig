@@ -20,3 +20,6 @@ Promover a integração entre ciência, tecnologia e sociedade por meio da produ
 2. Instale as dependências: `pip install -r analise/requirements.txt`
 3. Execute o script de limpeza e geração de gráficos: `python analise/01_limpeza_e_analise.py`
 4. Para abrir o dashboard interativo localmente: `streamlit run analise/02_dashboard_app.py`
+
+## 📊 Link do Dashboard Interativo Público
+Acesse os resultados e gráficos em tempo real aqui: [Acessar Dashboard no Streamlit (https://projeto-extensionista-unig-ndk9w3pz2a3eai87crab5d.streamlit.app)]
